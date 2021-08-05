@@ -1,0 +1,24 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<div align="center"><br><br>
+    {% for dish in dishes %}
+
+    <img src="{{ dish.image.url }}" alt="" style="width: 300px; height: auto;">
+    <a href="{% url 'detail' dish.id %}"><h3>{{ dish.title }}</h3></a>
+    <h5>{{ dish.description }}</h5>
+    <p>{{ dish.price }} сом</p>
+    <a class="btn btn-success" href="{% url 'cart_add' dish.id %}" role="button">Add to cart</a>
+    <br><br>
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+    <a class="btn btn-warning" href="{% url 'update_dish' dish.id %}" role="button">Update</a>
+    <a class="btn btn-danger" href="{% url 'delete_dish' dish.id %}" role="button">Delete</a>
+    {% endif %}
+    <hr>
+
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
