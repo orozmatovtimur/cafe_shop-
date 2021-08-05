@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class NewUserForm(UserCreationForm):
@@ -12,7 +12,6 @@ class NewUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
-
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -26,14 +25,16 @@ class NewUserForm(UserCreationForm):
             raise forms.ValidationError('Such username already exists.')
         return username
 
-    def clean(self):
-        data = self.cleaned_data
-        password = data.get('password')
 
-        password_confirm = data.pop('password_confirmation')
-        if password != password_confirm:
-            raise forms.ValidationError("Passwords do not match.")
-        return data
+    def clean_password(self):
+        if not self.cleaned_data['password1']:
+            raise forms.ValidationError("Enter a password.")
+        return self.cleaned_data['password1']
+
+    def clean_password2(self):
+        if not self.cleaned_data['password2']:
+            raise forms.ValidationError("Enter a password.")
+        return self.cleaned_data['password2']
 
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)

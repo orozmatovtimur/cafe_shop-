@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
      <!-- NAVBAR -->
@@ -14,14 +14,16 @@
                     </button>
 
                     <!-- lOGO TEXT HERE -->
-                    <a href="index.html" class="navbar-brand">Eatery <span>.</span> Cafe</a>
+                    <a href="{% url 'home' %}" class="navbar-brand">Eatery <span>.</span> Cafe</a>
                </div>
 
                <!-- MENU LINKS -->
                <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-nav-first">
                          <li><a href="#" class="smoothScroll">Home</a></li>
+                        {% if request.user.is_authenticated and request.user.is_superuser %}
                          <li><a href="{% url 'create_dish' %}" class="smoothScroll">Create</a></li>
+                        {% endif %}
                          <li><a href="#" class="smoothScroll">Menu</a></li>
                     <li> <!--li tag for whole searchbar -->
                      <form>
@@ -30,7 +32,7 @@
                            <div class="input-select">
                              <select data-trigger="" name="choices-single-default">
                                <option placeholder="">Category</option>
-                               {% for category in products %}
+                               {% for category in categories %}
                                <option>{{ category.name }}</option>
                                {% endfor %}
                              </select>
@@ -41,15 +43,15 @@
                          </div>
                          <div class="input-field third-wrap">
                           <button class="btn-search" type="button"> Search
-<!--                               <svg class="svg-inline&#45;&#45;fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">-->
-<!--                               <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>-->
-<!--                             </svg>-->
+
                            </button>
                            </div>
                          </div>
                        </form>
 
 <!--                    End Searchbar -->
+                         <li><a href="{% url 'cart_detail' %}"><img style="width: 30px ;height: auto;" src="{% static 'cart/carts.png' %}" ></a></li>
+
                    <script src="js/extention/choices.js"></script>
                    <script>
                      const choices = new Choices('[data-trigger]',
@@ -65,7 +67,7 @@
      <!-- is Authenticated   -->
       {% if user.is_authenticated %}
         <div class="nav navbar-nav navbar-right">
-        <li><a class="smoothScroll" href="/logout">Logout</a></li>
+        <li><a class="smoothScroll" href="{% url 'logout' %}">Logout</a></li>
         <li><a class="smoothScroll" href="#">Welcome, {{user.username}}</a></li>
         </div>
 
@@ -103,114 +105,25 @@
      </section>
 
 <!--  MENU-->
-     <section id="menu" data-stellar-background-ratio="0.5">
-          <div class="container">
-               <div class="row">
 
-                    <div class="col-md-12 col-sm-12">
-                         <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                              <h1>hello</h1>
-                              {% for category in categories %}
-                              <h2>{{ category.name }}</h2>
-                              <h4>Tea Time &amp; Dining</h4>
-                              {% endfor %}
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- MENU THUMB -->
-                         <div class="menu-thumb">
-                              <a href="images/menu-image1.jpg" class="image-popup" title="American Breakfast">
-                                   <img src="{{ category.image.url }}" class="img-responsive" alt="">
-                                   {% for category in categories %}
-                                   <div class="menu-info">
-                                        <div class="menu-item">
-                                             <h1>HELLO</h1>
-                                             <h3>{{ category.name }}</h3>
-
-                                        </div>
-
-                                   </div>
-                                   {% endfor %}
-
-                              </a>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </section>
 
      <section id="menu" data-stellar-background-ratio="0.5">
           <div class="container">
                <div class="row">
 
-                    <div class="col-md-12 col-sm-12">
-                         <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                              {% for category in categories %}
-                              <h2>{{ category.name }}</h2>
-                              <img src="{{ category.image.url }}" alt="">
-                              {% endfor %}
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- MENU THUMB -->
-                         <div class="menu-thumb">
-                              <a href="images/menu-image1.jpg" class="image-popup" title="American Breakfast">
-                                   <img src="{{ category.image.url }}" class="img-responsive" alt="">
-                                   {% for category in categories %}
-                                   <div class="menu-info">
-                                        <div class="menu-item">
-                                             <h1>HELLO</h1>
-                                             <h3>{{ category.name }}</h3>
-                                             <img src="{{ category.image.url }}" alt="">
-                                             <p>Tomato / Eggs / Sausage</p>
-                                        </div>
-                                        <div class="menu-price">
-                                             <span>$25</span>
-                                        </div>
-                                   </div>
-                                   {% endfor %}
-
-                              </a>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </section>
-
- <!-- CONTACT -->
-     <section id="contact" data-stellar-background-ratio="0.5">
-          <div class="container">
-               <div class="row">
-	<!-- How to change your own map point
-            1. Go to Google Maps
-            2. Click on your location point
-            3. Click "Share" and choose "Embed map" tab
-            4. Copy only URL and paste it within the src="" field below
-	-->
-                    <div class="wow fadeInUp col-md-6 col-sm-12" data-wow-delay="0.4s">
-                         <div id="google-map">
-                              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.3030413476204!2d100.5641230193719!3d13.757206847615207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf51ce6427b7918fc!2sG+Tower!5e0!3m2!1sen!2sth!4v1510722015945" allowfullscreen></iframe>
-                         </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-12">
-
-                         <div class="col-md-12 col-sm-12">
-                              <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                                   <h2>Contact Us</h2>
-                                   <h3>Number:</h3><h3 style="color: blue">+996779411789</h3>
-                                   <h3>Email:</h3><h3 style="color: blue">t.orozmatov77@gmail.com</h3>
-
-                              </div>
-                         </div>
-                    </div>
+                   <div class="card" style="width: 150rem;" align="center">
+                          {% for category in categories %}
+                          <a href="{% url 'list' category.slug %}"><br>
+                               <h2>{{ category.name }}</h2>
+                               <img src="{{ category.image.url }}" alt="" style="width: 300px; height: auto;"><br>
+                               <br>
+                          </a>
+                          {% endfor %}
+                   </div>
 
                </div>
           </div>
      </section>
-
 
 
  <!-- FOOTER -->

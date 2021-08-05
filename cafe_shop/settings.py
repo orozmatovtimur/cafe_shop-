@@ -23,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -41,12 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-    'main',
-    'cafe_shop',
     'account',
-    'crispy_forms',
-
-
+    'cart',
+    'main',
 ]
 
 
@@ -75,12 +71,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart_total_amount',
+
 
             ],
         },
     },
 ]
-
+CART_SESSION_ID = 'cart'
 WSGI_APPLICATION = 'cafe_shop.wsgi.application'
 
 
@@ -149,9 +147,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/home'
 LOGIN_URL = '/account/login/'
+
+#TODO: AttributeError: Manager isn't available; 'auth.User' has been swapped for 'account.User'
 
 AUTH_USER_MODEL = 'account.User'
 
