@@ -13,7 +13,6 @@ class NewUserForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 
-
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
@@ -26,14 +25,24 @@ class NewUserForm(UserCreationForm):
             raise forms.ValidationError('Such username already exists.')
         return username
 
-    def clean(self):
-        data = self.cleaned_data
-        password = data.get('password')
+    # def clean(self):
+    #     data = self.cleaned_data
+    #     password1 = data.get('password1')
+    #
+    #     password2 = data.pop('password2')
+    #     if password1 != password2:
+    #         raise forms.ValidationError("Passwords do not match.")
+    #     return data
 
-        password_confirm = data.pop('password_confirmation')
-        if password != password_confirm:
-            raise forms.ValidationError("Passwords do not match.")
-        return data
+    def clean_password(self):
+        if not self.cleaned_data['password1']:
+            raise forms.ValidationError("Enter a password.")
+        return self.cleaned_data['password1']
+
+    def clean_password2(self):
+        if not self.cleaned_data['password2']:
+            raise forms.ValidationError("Enter a password.")
+        return self.cleaned_data['password2']
 
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)

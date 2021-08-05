@@ -6,7 +6,7 @@
 <!--Login--> 
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh" class="container py-5">
 
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
       <h1>Login</h1>
     {{ login_form|crispy }}
     {% csrf_token %}

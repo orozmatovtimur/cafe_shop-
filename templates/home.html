@@ -103,114 +103,20 @@
      </section>
 
 <!--  MENU-->
-     <section id="menu" data-stellar-background-ratio="0.5">
-          <div class="container">
-               <div class="row">
 
-                    <div class="col-md-12 col-sm-12">
-                         <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                              <h1>hello</h1>
-                              {% for category in categories %}
-                              <h2>{{ category.name }}</h2>
-                              <h4>Tea Time &amp; Dining</h4>
-                              {% endfor %}
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- MENU THUMB -->
-                         <div class="menu-thumb">
-                              <a href="images/menu-image1.jpg" class="image-popup" title="American Breakfast">
-                                   <img src="{{ category.image.url }}" class="img-responsive" alt="">
-                                   {% for category in categories %}
-                                   <div class="menu-info">
-                                        <div class="menu-item">
-                                             <h1>HELLO</h1>
-                                             <h3>{{ category.name }}</h3>
-
-                                        </div>
-
-                                   </div>
-                                   {% endfor %}
-
-                              </a>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </section>
 
      <section id="menu" data-stellar-background-ratio="0.5">
           <div class="container">
                <div class="row">
 
-                    <div class="col-md-12 col-sm-12">
-                         <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                              {% for category in categories %}
-                              <h2>{{ category.name }}</h2>
-                              <img src="{{ category.image.url }}" alt="">
-                              {% endfor %}
-                         </div>
+                    {% for category in categories %}
+                   <div class="card" style="width: 18rem;">
+                    <img width="200" height="200" src="{{ category.image.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <a href="#" class="card-link"><h4>{{ category.name }}</h4></a>
                     </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- MENU THUMB -->
-                         <div class="menu-thumb">
-                              <a href="images/menu-image1.jpg" class="image-popup" title="American Breakfast">
-                                   <img src="{{ category.image.url }}" class="img-responsive" alt="">
-                                   {% for category in categories %}
-                                   <div class="menu-info">
-                                        <div class="menu-item">
-                                             <h1>HELLO</h1>
-                                             <h3>{{ category.name }}</h3>
-                                             <img src="{{ category.image.url }}" alt="">
-                                             <p>Tomato / Eggs / Sausage</p>
-                                        </div>
-                                        <div class="menu-price">
-                                             <span>$25</span>
-                                        </div>
-                                   </div>
-                                   {% endfor %}
-
-                              </a>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </section>
-
- <!-- CONTACT -->
-     <section id="contact" data-stellar-background-ratio="0.5">
-          <div class="container">
-               <div class="row">
-	<!-- How to change your own map point
-            1. Go to Google Maps
-            2. Click on your location point
-            3. Click "Share" and choose "Embed map" tab
-            4. Copy only URL and paste it within the src="" field below
-	-->
-                    <div class="wow fadeInUp col-md-6 col-sm-12" data-wow-delay="0.4s">
-                         <div id="google-map">
-                              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.3030413476204!2d100.5641230193719!3d13.757206847615207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf51ce6427b7918fc!2sG+Tower!5e0!3m2!1sen!2sth!4v1510722015945" allowfullscreen></iframe>
-                         </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-12">
-
-                         <div class="col-md-12 col-sm-12">
-                              <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                                   <h2>Contact Us</h2>
-                                   <h3>Number:</h3><h3 style="color: blue">+996779411789</h3>
-                                   <h3>Email:</h3><h3 style="color: blue">t.orozmatov77@gmail.com</h3>
-
-                              </div>
-                         </div>
-                    </div>
-
-               </div>
-          </div>
-     </section>
-
+                   </div>
+                   {% endfor %}
 
 
  <!-- FOOTER -->
