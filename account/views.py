@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
 
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -23,7 +25,7 @@ class SignInView(LoginView):
     success_url = reverse_lazy('home')
 
 
-# def logout_request(request):
-#     logout(request)
-#     messages.info(request, "You have successfully logged out.")
-#     return reverse_lazy("home")
+def logout_request(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("home")
