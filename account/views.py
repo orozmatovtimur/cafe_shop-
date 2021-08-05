@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 
 from .forms import NewUserForm
@@ -23,7 +23,7 @@ class SignInView(LoginView):
     success_url = reverse_lazy('home')
 
 
-def logout_request(request):
-    logout(request)
-    messages.info(request, "You have successfully logged out.")
-    return redirect("home")
+# def logout_request(request):
+#     logout(request)
+#     messages.info(request, "You have successfully logged out.")
+#     return reverse_lazy("home")

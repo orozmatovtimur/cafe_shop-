@@ -25,14 +25,6 @@ class NewUserForm(UserCreationForm):
             raise forms.ValidationError('Such username already exists.')
         return username
 
-    # def clean(self):
-    #     data = self.cleaned_data
-    #     password1 = data.get('password1')
-    #
-    #     password2 = data.pop('password2')
-    #     if password1 != password2:
-    #         raise forms.ValidationError("Passwords do not match.")
-    #     return data
 
     def clean_password(self):
         if not self.cleaned_data['password1']:
