@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+  {% for dish in dishess %}
+  <h2>{{ dish.title }}</h2>
+  <h5>{{ dish.description }}</h5>
+  <p>{{ dish.price }}</p>
+  <img src="{{ dish.image.url }}" alt="" style="width: 500px; height: auto;">
+
+  {% endfor %}
+</div>
+
+{% endblock %}

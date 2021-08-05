@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
      <!-- NAVBAR -->
@@ -14,14 +14,16 @@
                     </button>
 
                     <!-- lOGO TEXT HERE -->
-                    <a href="index.html" class="navbar-brand">Eatery <span>.</span> Cafe</a>
+                    <a href="{% url 'home' %}" class="navbar-brand">Eatery <span>.</span> Cafe</a>
                </div>
 
                <!-- MENU LINKS -->
                <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-nav-first">
                          <li><a href="#" class="smoothScroll">Home</a></li>
+                        {% if request.user.is_authenticated and request.user.is_superuser %}
                          <li><a href="{% url 'create_dish' %}" class="smoothScroll">Create</a></li>
+                        {% endif %}
                          <li><a href="#" class="smoothScroll">Menu</a></li>
                     <li> <!--li tag for whole searchbar -->
                      <form>
@@ -30,7 +32,7 @@
                            <div class="input-select">
                              <select data-trigger="" name="choices-single-default">
                                <option placeholder="">Category</option>
-                               {% for category in products %}
+                               {% for category in categories %}
                                <option>{{ category.name }}</option>
                                {% endfor %}
                              </select>
@@ -48,6 +50,8 @@
                        </form>
 
 <!--                    End Searchbar -->
+                         <li><a href="{% url 'cart_detail' %}"><img style="width: 30px ;height: auto;" src="{% static 'cart/carts.png' %}" ></a></li>
+
                    <script src="js/extention/choices.js"></script>
                    <script>
                      const choices = new Choices('[data-trigger]',
@@ -63,7 +67,7 @@
      <!-- is Authenticated   -->
       {% if user.is_authenticated %}
         <div class="nav navbar-nav navbar-right">
-        <li><a class="smoothScroll" href="/logout">Logout</a></li>
+        <li><a class="smoothScroll" href="{% url 'logout' %}">Logout</a></li>
         <li><a class="smoothScroll" href="#">Welcome, {{user.username}}</a></li>
         </div>
 
@@ -107,14 +111,19 @@
           <div class="container">
                <div class="row">
 
-                    {% for category in categories %}
-                   <div class="card" style="width: 18rem;">
-                    <img width="200" height="200" src="{{ category.image.url }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <a href="#" class="card-link"><h4>{{ category.name }}</h4></a>
-                    </div>
+                   <div class="card" style="width: 150rem;" align="center">
+                          {% for category in categories %}
+                          <a href="{% url 'list' category.slug %}"><br>
+                               <h2>{{ category.name }}</h2>
+                               <img src="{{ category.image.url }}" alt="" style="width: 300px; height: auto;"><br>
+                               <br>
+                          </a>
+                          {% endfor %}
                    </div>
-                   {% endfor %}
+
+               </div>
+          </div>
+     </section>
 
 
  <!-- FOOTER -->
