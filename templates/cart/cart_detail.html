@@ -1,30 +1,129 @@
 {% extends 'base.html' %}
-{% load cart_tag %}
 
+{% load cart_tag %}
+{% load static %}
 {% block content %}
+<div style="background-color: ;">
+<br>
+<div align="center">
+    <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+             <span class="icon icon-bar"></span>
+             <span class="icon icon-bar"></span>
+             <span class="icon icon-bar"></span>
+        </button>
+
+        <!-- lOGO TEXT HERE -->
+        <a href="{% url 'home' %}" class="navbar-brand">Купи <span>.</span> Поесть</a>
+
+   </div>
+    <form style="display: flex; margin-top:9px ;margin-left:30px" class="d-flex" method="get" action="{% url 'search' %}">
+    <input name="q" class="form-control me-2" type="search" placeholder="что поесть?" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Поиск</button>
+    </form>
+</div>
+
+<br>
+<h1>Cart list:</h1>
+<br>
+
 
 {% for key, product in request.session.cart.items %}
+<div>
+    <div class="card" style="width: 18rem;" align="center">
+      <img style="width: 300px; height: auto;" src="{{ product.image }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ product.price }}</li>
+        <li class="list-group-item">{{ product.quantity }}</li>
+        <li class="list-group-item">Total: {{ product.price|multiply:product.quantity }}</li>
+      </ul>
+      <div class="card-body">
+        <a style="font-size: 25px;" href="{% url 'item_increment' key %}" class="card-link"><span>&#43;</span></a>
+        {% if not product.quantity == 1 %}<br>
+        <a style="font-size: 25px;" href="{% url 'item_decrement' key %}" class="card-link"><span>&#8722;</span></a>
+        {% endif %}
+      </div>
+      <br>
+      <a class="btn btn-danger" href="{% url 'item_clear' key %}" role="button">Remove cart</a>
+      <br><br>
+      <a class="btn btn-warning" href="{% url 'cart_clear' %}" role="button">Clear</a>
 
-<div class="card" style="width: 18rem;">
-  <img src="{{ product.image }}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{ product.name }}</h5>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{ product.price }}</li>
-    <li class="list-group-item">{{ product.quantity }}</li>
-    <li class="list-group-item">Total: {{ product.price|multiply:product.quantity }}</li>
-  </ul>
-  <div class="card-body">
-    <a href="{% url 'item_increment' key %}" class="card-link"><span>&#43;</span></a>
-    {% if not product.quantity == 1 %}
-    <a href="{% url 'item_decrement' key %}" class="card-link"><span>&#8722;</span></a>
-    {% endif %}
-  </div>
-  <a class="btn btn-danger" href="{% url 'item_clear' key %}" role="button">Remove cart</a>
+    </div>
 </div>
+
 {% endfor %}
 
-<a class="btn btn-warning" href="{% url 'cart_clear' %}" role="button">Clear</a>
+<br><br><br>
+<!-- FOOTER -->
+     <footer id="footer" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-3 col-sm-8">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2 class="wow fadeInUp" data-wow-delay="0.2s">Find us</h2>
+                              </div>
+                              <address class="wow fadeInUp" data-wow-delay="0.4s">
+                                   <p>123 nulla a cursus rhoncus,<br> augue sem viverra 10870<br>id ultricies sapien</p>
+                              </address>
+                         </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-8">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2 class="wow fadeInUp" data-wow-delay="0.2s">Reservation</h2>
+                              </div>
+                              <address class="wow fadeInUp" data-wow-delay="0.4s">
+                                   <p>090-080-0650 | 090-070-0430</p>
+                                   <p><a href="mailto:info@company.com">info@company.com</a></p>
+                                   <p>LINE: eatery247 </p>
+                              </address>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-8">
+                         <div class="footer-info footer-open-hour">
+                              <div class="section-title">
+                                   <h2 class="wow fadeInUp" data-wow-delay="0.2s">Open Hours</h2>
+                              </div>
+                              <div class="wow fadeInUp" data-wow-delay="0.4s">
+                                   <p>Monday: Closed</p>
+                                   <div>
+                                        <strong>Tuesday to Friday</strong>
+                                        <p>7:00 AM - 9:00 PM</p>
+                                   </div>
+                                   <div>
+                                        <strong>Saturday - Sunday</strong>
+                                        <p>11:00 AM - 10:00 PM</p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-4">
+                         <ul class="wow fadeInUp social-icon" data-wow-delay="0.4s">
+                              <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                              <li><a href="#" class="fa fa-twitter"></a></li>
+                              <li><a href="#" class="fa fa-instagram"></a></li>
+                              <li><a href="#" class="fa fa-google"></a></li>
+                         </ul>
+
+                         <div class="wow fadeInUp copyright-text" data-wow-delay="0.8s">
+                              <p><br>Copyright &copy; 2018 <br>Your Company Name
+
+                              <br><br>Design: <a rel="nofollow" href="http://templatemo.com" target="_parent">TemplateMo</a></p>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </footer>
+
+</div>
 
 {% endblock %}

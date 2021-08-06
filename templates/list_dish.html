@@ -31,7 +31,7 @@
     <p class="card-text">{{ product.price }} сом</p>
       <a class="btn btn-success" href="{% url 'cart_add' product.id %}" role="button">Add to cart</a>
     <br><br>
-      {% if request.user.is_authenticated and request.user.is_superuser %}
+      {% if request.user.is_superuser %}
     <a class="btn btn-warning" href="{% url 'update_dish' product.id %}" role="button">Update</a>
     <a class="btn btn-danger" href="{% url 'delete_dish' product.id %}" role="button">Delete</a>
     {% endif %}
