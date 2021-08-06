@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
-  {% block content %}
+{% load static %}
+{% block content %}
 
 <h3>Search Results: </h3>
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 
-  {% for dish in dishes %}
+<div align="center"><br><br><br>
+<div class="card" style="width: 50rem;">
+     {% for product in products %}
+  <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h2 class="card-title">{{ product.name }}</h2>
+      <h4 class="card-title">{{ product.description }}</h4>
+    <p class="card-text">{{ product.price }} сом</p>
+      <a class="btn btn-success" href="{% url 'cart_add' product.id %}" role="button">Добавить в корзину</a>
+    <br><br>
+      {% if request.user.is_authenticated and request.user.is_superuser %}
+    <a class="btn btn-warning" href="{% url 'update_dish' product.id %}" role="button">Изменить</a>
+    <a class="btn btn-danger" href="{% url 'delete_dish' product.id %}" role="button">Удалить</a>
+    {% endif %}
+    <hr>
 
-<!-- TODO: for loop doesn't work, dishes aren't loading-->
+    {% endfor %}
 
-
-  <div class="card mb-3" style="max-width: 800px;">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img style="width: 300px, height: auto;" src="{{ dish.image.url }}" class="img-fluid rounded-start" alt="...">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h4 class="card-title">{{ dish.title }}</h4>
-          <p class="card-text">{{ dish.description|truncatechars:150}} </p>
-          <p class="card-text"><small class="text-muted">{{ dish.price }} som </small></p>
-        </div>
-      </div>
-    </div>
   </div>
-  {% endfor %}
+</div>
 </div>
 
-
- {% endblock %}
+{% endblock %}

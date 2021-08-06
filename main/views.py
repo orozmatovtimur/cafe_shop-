@@ -90,19 +90,20 @@ class ProductDeleteView(IsAdminCheckMixin, DeleteView):
 
 
 class SearchListView(ListView):
-    model = Product # Product.objects.all()
+    model = Product
     template_name = 'search_results.html'
     context_object_name = 'products'
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # print(self.request.GET)
         q = self.request.GET.get('q')
+        print(queryset.filter(name=q))
 
         if not q:
             return Product.objects.none()
         queryset = queryset.filter(Q(name__icontains=q) |
                                    Q(description__icontains=q))
+        print(queryset)
         return queryset
 
 

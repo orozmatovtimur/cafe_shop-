@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 
-     <!-- NAVBAR -->
+          <!-- NAVBAR -->
+
      <section class="navbar custom-navbar navbar-fixed-top" role="navigation">
           <div style="margin-bottom: 50px" class="container">
 
@@ -20,12 +21,13 @@
                <!-- MENU LINKS -->
                <div style="display: flex; width:1200px; height: auto" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-nav-first">
-                         <li><a href="#" class="smoothScroll">Домой</a></li>
+                         <li><a href="/home" class="smoothScroll">Домой</a></li>
                         {% if request.user.is_authenticated and request.user.is_superuser %}
                          <li><a href="{% url 'create_dish' %}" class="smoothScroll">Добавить блюдо</a></li>
                         {% endif %}
                          <li><a href="#" class="smoothScroll">Меню</a></li>
-                    <li> <!--li tag for whole searchbar -->
+
+                    <!-- tag for whole searchbar -->
 
                     <form style="display: flex; margin-top:9px ;margin-left:30px" class="d-flex" method="get" action="{% url 'search' %}">
 
@@ -70,6 +72,9 @@
 
           </div>
      </section>
+          </div>
+
+
 
      <!-- HOME -->
      <section id="home" class="slider" data-stellar-background-ratio="0.5">
@@ -81,7 +86,7 @@
                                    <div class="container">
                                         <div class="col-md-8 col-sm-12">
                                              <h3>Bishkek Food &amp; Delivery</h3>
-                                             <h1>Пять лучших кухни города на любой вкус!</h1>
+                                             <h1>Лучшие кухни города на любой вкус!</h1>
                                              <a href="#menu1" class="section-btn btn btn-default smoothScroll">Заказать</a>
                                         </div>
                                    </div>

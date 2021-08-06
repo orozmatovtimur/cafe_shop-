@@ -43,8 +43,28 @@ INSTALLED_APPS = [
     'account',
     'cart',
     'main',
+
+    #registration via socials
+    #libs
+    'django.contrib.sites',
+    'allauth',
+    # 'allauth.account',
+
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google', #for google auth
 ]
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +75,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # used for default signin such as loggin into admin panel
+    'django.contrib.auth.backends.ModelBackend',
+
+    # used for social authentications
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
 
 ROOT_URLCONF = 'cafe_shop.urls'
 
@@ -119,9 +150,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
@@ -150,10 +181,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGOUT_REDIRECT_URL = '/home'
 LOGIN_REDIRECT_URL = '/home'
 LOGIN_URL = '/account/login/'
-
-
-#TODO: не работает SIGN UP после нажатия submit,
-# AttributeError: Manager isn't available; 'auth.User' has been swapped for 'account.User'
 
 AUTH_USER_MODEL = 'account.User'
 

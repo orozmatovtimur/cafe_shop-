@@ -3,6 +3,11 @@
 
 {% block content %}
 
+
+<div style="margin: 40px;">
+<div style="display: flex; justify-content: center; margin-top: 40px; margin-bottom: 20px" class="collapse navbar-collapse">
+<li><a href="/home" class="smoothScroll"><b>Домой</b></a></li>
+</div>
 {% for key, product in request.session.cart.items %}
 
 <div class="card" style="width: 18rem;">
@@ -21,10 +26,10 @@
     <a href="{% url 'item_decrement' key %}" class="card-link"><span>&#8722;</span></a>
     {% endif %}
   </div>
-  <a class="btn btn-danger" href="{% url 'item_clear' key %}" role="button">Remove cart</a>
+  <a class="btn btn-danger" href="{% url 'item_clear' key %}" role="button">Убрать блюдо с корзины</a>
 </div>
 {% endfor %}
 
-<a class="btn btn-warning" href="{% url 'cart_clear' %}" role="button">Clear</a>
-
+<a class="btn btn-warning" href="{% url 'cart_clear' %}" role="button">Очистить корзину</a>
+</div>
 {% endblock %}

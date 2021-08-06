@@ -21,21 +21,19 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     price = models.DecimalField(max_digits=10,
                               decimal_places=3)
+
     image = models.ImageField(upload_to='images')
 
     def __str__(self):
+        if self.category:
+            return f"{self.category} -> {self.name}"
         return self.name
 
-# class Reviews(models.Model):
-#     """Отзыв"""
-#     email = models.EmailField()
-#     name = models.CharField(max_length=100)
-#     text = models.CharField(max_length=3000)
-#     dish = models.ForeignKey(Dish, verbose_name='Блюдо ', on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f"{self.name} - {self.dish}"
-#
-#     class Meta:
-#         verbose_name = "Отзыв"
-#         verbose_name_plural = "Отзывы"
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('detail', kwargs={'id': self.pk})
+
+    class Meta:
+        ordering = ['-id']
+
+

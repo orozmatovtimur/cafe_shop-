@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django import forms
+
 
 
 class User(AbstractUser):
@@ -12,5 +12,5 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.get_full_name()
+        return self.email
 
