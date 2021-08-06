@@ -1,4 +1,5 @@
 from cart.cart import Cart
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import *
@@ -16,10 +17,11 @@ class MainPageView(ListView):
     context_object_name = 'categories'
 
 
-class DishListView(ListView):
-    model = Dish
+class ProductListView(ListView):
+    model = Product
     template_name = 'list_dish.html'
-    context_object_name = 'dishes'
+    context_object_name = 'products'
+    paginate_by = 1
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -41,45 +43,45 @@ class IsAdminCheckMixin(UserPassesTestMixin):
         return self.request.user.is_authenticated and self.request.user.is_superuser
 
 
-class DishDetailView(DetailView):
-    model = Dish
+class ProductDetailView(DetailView):
+    model = Product
     template_name = 'detail_dish.html'
-    context_object_name = 'dishess'
+    context_object_name = 'products'
     pk_url_kwarg = 'id'
 
     def get_success_url(self):
         return reverse('home')
 
 
-class DishCreateView(IsAdminCheckMixin, CreateView):
-    model = Dish
+class ProductCreateView(IsAdminCheckMixin, CreateView):
+    model = Product
     template_name = 'create_dish.html'
     form_class = CreateDishForm
-    context_object_name = 'dish_form'
+    context_object_name = 'product_form'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['dish_form'] = self.get_form(self.get_form_class())
+        context['product_form'] = self.get_form(self.get_form_class())
         return context
 
     def get_success_url(self):
         return reverse('home')
 
 
-class DishUpdateView(IsAdminCheckMixin, UpdateView):
-    model = Dish
+class ProductUpdateView(IsAdminCheckMixin, UpdateView):
+    model = Product
     template_name = 'update_dish.html'
     form_class = UpdateDishForm
     pk_url_kwarg = 'id'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['dish_form'] = self.get_form(self.get_form_class())
+        context['product_form'] = self.get_form(self.get_form_class())
         return context
 
 
-class DishDeleteView(IsAdminCheckMixin, DeleteView):
-    model = Dish
+class ProductDeleteView(IsAdminCheckMixin, DeleteView):
+    model = Product
     template_name = 'delete_dish.html'
     pk_url_kwarg = 'id'
 
@@ -87,18 +89,36 @@ class DishDeleteView(IsAdminCheckMixin, DeleteView):
         return reverse('home')
 
 
+class SearchListView(ListView):
+    model = Product # Product.objects.all()
+    template_name = 'search_results.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # print(self.request.GET)
+        q = self.request.GET.get('q')
+
+        if not q:
+            return Product.objects.none()
+        queryset = queryset.filter(Q(name__icontains=q) |
+                                   Q(description__icontains=q))
+        return queryset
+
+
 @login_required()
 def cart_add(request, id):
     cart = Cart(request)
-    product = Dish.objects.get(id=id)
+    product = Product.objects.get(id=id)
     cart.add(product=product)
     return redirect("home")
+
 
 
 @login_required()
 def item_clear(request, id):
     cart = Cart(request)
-    product = Dish.objects.get(id=id)
+    product = Product.objects.get(id=id)
     cart.remove(product)
     return redirect("cart_detail")
 
@@ -106,7 +126,7 @@ def item_clear(request, id):
 @login_required()
 def item_increment(request, id):
     cart = Cart(request)
-    product = Dish.objects.get(id=id)
+    product = Product.objects.get(id=id)
     cart.add(product=product)
     return redirect("cart_detail")
 
@@ -114,7 +134,7 @@ def item_increment(request, id):
 @login_required()
 def item_decrement(request, id):
     cart = Cart(request)
-    product = Dish.objects.get(id=id)
+    product = Product.objects.get(id=id)
     cart.decrement(product=product)
     return redirect("cart_detail")
 

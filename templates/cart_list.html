@@ -1,8 +1,0 @@
-{% extends 'home.html' %}
-{% block content %}
-
-{% for key,dish in request.session.cart.items %}
-
-<h1>{{ dish.title }}</h1>
-
-{% endblock %}

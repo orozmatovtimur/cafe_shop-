@@ -7,11 +7,12 @@ from main.views import *
 
 urlpatterns = [
     path('home/', MainPageView.as_view(), name='home'),
-    path('<str:slug>/', DishListView.as_view(), name='list'),
-    path('dish/<int:id>/', DishDetailView.as_view(), name='detail'),
-    path('dish/create/', DishCreateView.as_view(), name='create_dish'),
-    path('dish/update/<int:id>/', DishUpdateView.as_view(), name='update_dish'),
-    path('dish/delete/<int:id>/', DishDeleteView.as_view(), name='delete_dish'),
+    path('<str:slug>/', ProductListView.as_view(), name='list'),
+    path('product/<int:id>/', ProductDetailView.as_view(), name='detail'),
+    path('product/create/', ProductCreateView.as_view(), name='create_dish'),
+    path('product/update/<int:id>/', ProductUpdateView.as_view(), name='update_dish'),
+    path('product/delete/<int:id>/', ProductDeleteView.as_view(), name='delete_dish'),
+    path('search', SearchListView.as_view(), name='search'),
 
     # cart urls
     path('cart/add/<int:id>/', views.cart_add, name='cart_add'),
