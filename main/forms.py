@@ -5,13 +5,13 @@ from .models import *
 
 class CreateDishForm(forms.ModelForm):
     class Meta:
-        model = Dish
+        model = Product
         fields = "__all__"
 
 
 class UpdateDishForm(forms.ModelForm):
     class Meta:
-        model = Dish
+        model = Product
         fields = "__all__"
 
 

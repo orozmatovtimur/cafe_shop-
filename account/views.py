@@ -16,7 +16,7 @@ from django.contrib import messages
 class RegisterView(CreateView):
     model = User
     form_class = NewUserForm
-    template_name = 'register.html'
+    template_name = 'account/register.html'
     success_url = reverse_lazy('home')
 
 

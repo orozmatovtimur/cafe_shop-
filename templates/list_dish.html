@@ -1,24 +1,145 @@
 {% extends 'home.html' %}
+{% load static %}
 {% block content %}
 
-<div align="center"><br><br>
-    {% for dish in dishes %}
+<nav style="display: flex; width: auto; height: auto; justify-content: center;" class="navbar navbar-expand-lg navbar-light bg-light">
+  <div style="display: flex; margin-bottom: 50px; text-align: center; justify-content: center; " class="navbar-header">
+    <a class="navbar-brand" href="/home">Bishek Food</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-    <img src="{{ dish.image.url }}" alt="" style="width: 300px; height: auto;">
-    <a href="{% url 'detail' dish.id %}"><h3>{{ dish.title }}</h3></a>
-    <h5>{{ dish.description }}</h5>
-    <p>{{ dish.price }} сом</p>
-    <a class="btn btn-success" href="{% url 'cart_add' dish.id %}" role="button">Add to cart</a>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div align="center"><br><br><br>
+<div class="card" style="width: 50rem;">
+     {% for product in products %}
+  <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h2 class="card-title">{{ product.name }}</h2>
+      <h4 class="card-title">{{ product.description }}</h4>
+    <p class="card-text">{{ product.price }} сом</p>
+      <a class="btn btn-success" href="{% url 'cart_add' dish.id %}" role="button">Add to cart</a>
     <br><br>
-    {% if request.user.is_authenticated and request.user.is_superuser %}
-    <a class="btn btn-warning" href="{% url 'update_dish' dish.id %}" role="button">Update</a>
-    <a class="btn btn-danger" href="{% url 'delete_dish' dish.id %}" role="button">Delete</a>
+      {% if request.user.is_authenticated and request.user.is_superuser %}
+    <a class="btn btn-warning" href="{% url 'update_dish' product.id %}" role="button">Update</a>
+    <a class="btn btn-danger" href="{% url 'delete_dish' product.id %}" role="button">Delete</a>
     {% endif %}
     <hr>
 
     {% endfor %}
+
+  </div>
+</div>
 </div>
 
 
+
+
+
+<!--pagination-->
+{% if is_paginated %}
+  <nav aria-label="Page navigation example" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="{% url 'list' category %}?page={{ page.obj.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{% url 'list' category %}?page={{ page_obj.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+
+<!--End pagination-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+
+
+<!-- FOOTER -->
+     <footer id="footer" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-md-3 col-sm-8">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2 class="wow fadeInUp" data-wow-delay="0.2s">Find us</h2>
+                              </div>
+                              <address class="wow fadeInUp" data-wow-delay="0.4s">
+                                   <p>123 nulla a cursus rhoncus,<br> augue sem viverra 10870<br>id ultricies sapien</p>
+                              </address>
+                         </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-8">
+                         <div class="footer-info">
+                              <div class="section-title">
+                                   <h2 class="wow fadeInUp" data-wow-delay="0.2s">Reservation</h2>
+                              </div>
+                              <address class="wow fadeInUp" data-wow-delay="0.4s">
+                                   <p>090-080-0650 | 090-070-0430</p>
+                                   <p><a href="mailto:info@company.com">info@company.com</a></p>
+                                   <p>LINE: eatery247 </p>
+                              </address>
+                         </div>
+                    </div>
+
+<div class="col-md-4 col-sm-8">
+                         <div class="footer-info footer-open-hour">
+                              <div class="section-title">
+                                   <h2 class="wow fadeInUp" data-wow-delay="0.2s">Open Hours</h2>
+                              </div>
+                              <div class="wow fadeInUp" data-wow-delay="0.4s">
+                                   <p>Monday: Closed</p>
+                                   <div>
+                                        <strong>Tuesday to Friday</strong>
+                                        <p>7:00 AM - 9:00 PM</p>
+                                   </div>
+                                   <div>
+                                        <strong>Saturday - Sunday</strong>
+                                        <p>11:00 AM - 10:00 PM</p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-4">
+                         <ul class="wow fadeInUp social-icon" data-wow-delay="0.4s">
+                              <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                              <li><a href="#" class="fa fa-twitter"></a></li>
+                              <li><a href="#" class="fa fa-instagram"></a></li>
+                              <li><a href="#" class="fa fa-google"></a></li>
+                         </ul>
+
+                         <div class="wow fadeInUp copyright-text" data-wow-delay="0.8s">
+                              <p><br>Copyright &copy; 2018 <br>Your Company Name
+
+                              <br><br>Design: <a rel="nofollow" href="http://templatemo.com" target="_parent">TemplateMo</a></p>
+                         </div>
+                    </div>
+
+               </div>
+          </div>
+     </footer>
 
 {% endblock %}

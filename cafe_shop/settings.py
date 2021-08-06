@@ -151,7 +151,9 @@ LOGOUT_REDIRECT_URL = '/home'
 LOGIN_REDIRECT_URL = '/home'
 LOGIN_URL = '/account/login/'
 
-#TODO: AttributeError: Manager isn't available; 'auth.User' has been swapped for 'account.User'
+
+#TODO: не работает SIGN UP после нажатия submit,
+# AttributeError: Manager isn't available; 'auth.User' has been swapped for 'account.User'
 
 AUTH_USER_MODEL = 'account.User'
 
