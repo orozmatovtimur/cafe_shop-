@@ -34,12 +34,16 @@
       {% if request.user.is_authenticated and request.user.is_superuser %}
     <a class="btn btn-warning" href="{% url 'update_dish' product.id %}" role="button">Изменить</a>
     <a class="btn btn-danger" href="{% url 'delete_dish' product.id %}" role="button">Удалить</a>
-    {% endif %}
-    <hr>
+      {% endif %}
+      {% if request.user.is_superuser %}
+    <a class="btn btn-warning" href="{% url 'update_dish' product.id %}" role="button">Update</a>
+    <a class="btn btn-danger" href="{% url 'delete_dish' product.id %}" role="button">Delete</a>
+      <hr>
+      {% endif %}
 
-    {% endfor %}
 
   </div>
+      {% endfor %}
 </div>
 </div>
 
